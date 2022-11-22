@@ -1,0 +1,9 @@
+#form {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.asteriskField {
+    display: none;
+}

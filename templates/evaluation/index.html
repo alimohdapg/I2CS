@@ -1,0 +1,15 @@
+{% extends 'evaluation/base.html' %} <!-- Add this for inheritance -->
+{% load crispy_forms_tags %}
+{% block title %}Lovejoy Login{% endblock %}
+{% block pagecontent %}
+    <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+    {% if failed_login %}
+        <div class="alert alert-danger" role="alert">
+            Incorrect username or password
+        </div>
+    {% endif %}
+{% endblock %}
