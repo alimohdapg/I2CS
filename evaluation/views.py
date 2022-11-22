@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from .models import User
@@ -32,7 +32,7 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             first_name = request.POST['first_name']
-            last_name = request.POST['first_name']
+            last_name = request.POST['last_name']
             phone_num = request.POST['phone_num']
             email = request.POST['email']
             password = request.POST['password']
@@ -46,3 +46,13 @@ def signup(request):
     else:
         form = SignUpForm()
         return render(request, 'evaluation/signup.html', {'form': form})
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('index')
+
+
+@login_required(login_url='/evaluation/')
+def request_evaluation(request):
+    return render(request, 'evaluation/home.html')

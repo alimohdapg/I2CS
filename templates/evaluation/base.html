@@ -15,26 +15,37 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <span class="navbar-brand">Lovejoy</span>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Login<span class="sr-only">(current)</span></a>
-      </li>
-        <li class="nav-item">
-        <a class="nav-link" href="#">Signup<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Request Evaluation</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Evaluation Requests</a>
-      </li>
-    </ul>
-  </div>
+    <a class="navbar-brand" href={% url 'home' %}>Lovejoy</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Account
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href={% url 'index' %}>Login</a>
+                    <a class="dropdown-item" href={% url 'signup' %}>Signup</a>
+                    {% if request.user.is_authenticated %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" id="red-text" href={% url 'logout' %}>Logout</a>
+                    {% endif %}
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if not request.user.is_authenticated %} disabled {% endif %}" href="#">Request
+                    Evaluation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if not request.user.is_authenticated %} disabled {% endif %}" href="#">Evaluation
+                    Requests</a>
+            </li>
+        </ul>
+    </div>
 </nav>
 <div class="container" id="form">{% block pagecontent %}{% endblock %}</div>
 <!-- Optional JavaScript -->

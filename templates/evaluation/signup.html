@@ -7,7 +7,7 @@
         {{ form | crispy }}
         <button class="btn btn-primary" type="submit">Signup</button>
     </form>
-    {% if failed_login %}
+    {% if failed_signup %}
         <div class="alert alert-danger" role="alert">
             Incorrect signup details
         </div>
