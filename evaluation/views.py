@@ -53,7 +53,7 @@ def request_evaluation(request):
         form = RequestEvaluationForm(request.POST, request.FILES)
         if form.is_valid():  # figure out why this returns false
             evaluation = Evaluations(details=request.POST['details'], image=request.FILES['image'],
-                                     contact_method=request.POST['contact_method'], user_id=request.user.id)
+                                     contact_method=request.POST['contact_method'], user_id=request.user)
             evaluation.save()
             return render(request, 'evaluation/request_evaluation.html', {'request_submitted': True, 'form': form})
         else:
