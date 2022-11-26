@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from .models import User, Evaluations
-from django.db import IntegrityError
 
 
 def index(request):
@@ -12,6 +11,7 @@ def index(request):
         if form.is_valid():
             user = authenticate(request, email=form.cleaned_data['email'], password=form.cleaned_data['password'])
             if user is not None:
+                logout(request)
                 login(request, user)
                 return redirect('home')
             else:
@@ -33,6 +33,7 @@ def signup(request):
                                             first_name=form.cleaned_data['first_name'],
                                             last_name=form.cleaned_data['last_name'],
                                             phone_num=form.cleaned_data['phone_num'])
+            logout(request)
             login(request, user)
             return render(request, 'evaluation/home.html')
         else:
