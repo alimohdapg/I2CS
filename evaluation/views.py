@@ -3,13 +3,14 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from .models import User, Evaluations
+from django.db import IntegrityError
 
 
 def index(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            user = authenticate(request, email=request.POST['email'], password=request.POST['password'])
+            user = authenticate(request, email=form.cleaned_data['email'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
                 return redirect('home')
@@ -28,10 +29,10 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user = User.objects.create_user(request.POST['email'], request.POST['password'],
-                                            first_name=request.POST['first_name'], last_name=request.POST['last_name'],
-                                            phone_num=request.POST['phone_num'])
-            user.save()
+            user = User.objects.create_user(form.cleaned_data['email'], form.cleaned_data['password1'],
+                                            first_name=form.cleaned_data['first_name'],
+                                            last_name=form.cleaned_data['last_name'],
+                                            phone_num=form.cleaned_data['phone_num'])
             login(request, user)
             return render(request, 'evaluation/home.html')
         else:
@@ -51,8 +52,8 @@ def request_evaluation(request):
     if request.method == 'POST':
         form = RequestEvaluationForm(request.POST, request.FILES)
         if form.is_valid():  # figure out why this returns false
-            evaluation = Evaluations(details=request.POST['details'], image=request.FILES['image'],
-                                     contact_method=request.POST['contact_method'], user_id=request.user)
+            evaluation = form.save(commit=False)
+            evaluation.user = request.user
             evaluation.save()
             return render(request, 'evaluation/request_evaluation.html', {'request_submitted': True, 'form': form})
         else:

@@ -9,7 +9,12 @@
     </form>
     {% if failed_signup %}
         <div class="alert alert-danger" role="alert">
-            Incorrect signup details
+            Invalid signup details!
+        </div>
+    {% endif %}
+    {% if duplicate_user %}
+        <div class="alert alert-danger" role="alert">
+            Email already in use!
         </div>
     {% endif %}
 {% endblock %}
