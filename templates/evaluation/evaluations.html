@@ -1,0 +1,26 @@
+{% extends 'evaluation/base.html' %} <!-- Add this for inheritance -->
+{% load crispy_forms_tags %}
+{% block title %}Lovejoy Evaluation Requests{% endblock %}
+{% block pagecontent %}
+    {% for req in evaluation_requests %}
+        <div class="card mx-auto" id="eval-card">
+            <div id="eval-card-img">
+                <img class="card-img-top" id="img-thumbnail" src="{{ req.image.url }}" alt="Request Image">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Request Details</h5>
+                <p class="card-text">{{ req.details }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Name: {{ req.user.first_name }} {{ req.user.last_name }}</li>
+                <li class="list-group-item" id="capitalize">Contact Method ({{ req.contact_method | capfirst }}):
+                    {% if req.contact_method == 'phone' %}
+                        {{ req.user.phone_num }}
+                    {% else %}
+                        {{ req.user.email }}
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock %}

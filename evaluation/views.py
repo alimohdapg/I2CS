@@ -20,7 +20,6 @@ def index(request):
     return render(request, 'evaluation/index.html', {'form': form})
 
 
-@login_required(login_url='/evaluation/')
 def home(request):
     return render(request, 'evaluation/home.html')
 
@@ -65,4 +64,6 @@ def request_evaluation(request):
 
 @login_required(login_url='/evaluation/')
 def evaluations(request):
-    return render(request, 'evaluation/evaluations.html')
+    if request.user.is_staff == 0:
+        return redirect('home')
+    return render(request, 'evaluation/evaluations.html', {'evaluation_requests': Evaluations.objects.all()})

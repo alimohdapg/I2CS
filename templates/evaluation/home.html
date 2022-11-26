@@ -1,5 +1,11 @@
 {% extends 'evaluation/base.html' %} <!-- Add this for inheritance -->
 {% block title %}Lovejoy Home{% endblock %}
 {% block pagecontent %}
-    Welcome!!!!
+    {% if request.user.is_authenticated %}
+        Hi {{ request.user.first_name }}, Welcome back to Lovejoy's Antique Evaluation!
+    {% else %}
+        Welcome to Lovejoy's Antique Evaluation!<br><br>
+        Already have an account? Login <a href={% url 'index' %}>here</a>.<br><br>
+        New user? Signup <a href={% url 'signup' %}>here</a>.
+    {% endif %}
 {% endblock %}

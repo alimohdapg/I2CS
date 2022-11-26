@@ -36,14 +36,18 @@
                     {% endif %}
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {% if not request.user.is_authenticated %} disabled {% endif %}" href={% url 'request_evaluation' %}>Request
-                    Evaluation</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {% if not request.user.is_authenticated %} disabled {% endif %}" href={% url 'evaluations' %}>Evaluation
-                    Requests</a>
-            </li>
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href={% url 'request_evaluation' %}>Request Evaluation</a>
+                </li>
+                {% if request.user.is_staff == 1 %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href={% url 'evaluations' %}>Evaluation Requests</a>
+                    </li>
+                {% endif %}
+            {% endif %}
         </ul>
     </div>
 </nav>
