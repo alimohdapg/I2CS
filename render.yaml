@@ -1,4 +1,4 @@
-atabases:
+databases:
   - name: I2CS
     databaseName: I2CS
     user: root
