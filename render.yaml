@@ -1,12 +1,12 @@
 databases:
   - name: I2CS
-    databaseName: I2CS
+    databaseName: "I2CS"
     user: root
 
 services:
   - type: web
     name: lovejoy
-    env: python3
+    env: python
     buildCommand: "./build.sh"
     startCommand: "gunicorn mysite.wsgi:application"
     envVars:
