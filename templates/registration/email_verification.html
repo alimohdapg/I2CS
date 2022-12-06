@@ -1,0 +1,11 @@
+{% autoescape off %}
+Thank you for registering your account!!!
+
+Please click the link below to verify your email:
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+Thanks for using our site!
+
+The Lovejoy team.
+
+{% endautoescape %}

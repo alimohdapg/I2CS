@@ -1,5 +1,11 @@
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from .email_verification_token_generator import email_verification_token
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from .models import User, Evaluations
@@ -33,14 +39,48 @@ def signup(request):
                                             first_name=form.cleaned_data['first_name'],
                                             last_name=form.cleaned_data['last_name'],
                                             phone_num=form.cleaned_data['phone_num'])
-            logout(request)
-            login(request, user)
-            return render(request, 'evaluation/home.html')
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            subject = 'Activate Your Account'
+            body = render_to_string(
+                'registration/email_verification.html',
+                {
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': email_verification_token.make_token(user),
+                }
+            )
+            EmailMessage(to=[user.email], subject=subject, body=body).send()
+            return render(request, 'evaluation/signup.html', {'verify_email': True, 'email': user.email, 'form': form})
         else:
             return render(request, 'evaluation/signup.html', {'failed_signup': True, 'form': form})
     else:
         form = SignUpForm()
     return render(request, 'evaluation/signup.html', {'form': form})
+
+
+def get_user_from_email_verification_token(uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError,
+            User.DoesNotExist):
+        return None
+    if user is not None \
+            and \
+            email_verification_token.check_token(user, token):
+        return user
+    return None
+
+
+def activate_user(request, uidb64, token):
+    user = get_user_from_email_verification_token(uidb64, token)
+    user.is_active = True
+    user.save()
+    logout(request)
+    login(request, user)
+    return redirect('home')
 
 
 def logout_user(request):

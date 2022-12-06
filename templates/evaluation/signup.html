@@ -5,6 +5,7 @@
     <form action="{% url 'signup' %}" method="post">
         {% csrf_token %}
         {{ form | crispy }}
+        {{ form.tex }}
         <button class="btn btn-primary" type="submit">Signup</button>
     </form>
     {% if failed_signup %}
@@ -12,9 +13,10 @@
             Invalid signup details!
         </div>
     {% endif %}
-    {% if duplicate_user %}
-        <div class="alert alert-danger" role="alert">
-            Email already in use!
+    {% if verify_email %}
+        <div class="alert alert-info" role="alert">
+            We have emailed {{ email }}, please click on the included link to verify your email address.
         </div>
     {% endif %}
+
 {% endblock %}
