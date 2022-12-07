@@ -28,9 +28,6 @@ def index(request):
 
 
 def home(request):
-    u = User.objects.get(email='alimohdapg@gmail.com')
-    u.is_staff = True
-    u.save()
     return render(request, 'evaluation/home.html')
 
 
