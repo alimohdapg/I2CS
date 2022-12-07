@@ -1,6 +1,6 @@
 databases:
   - name: lovejoy
-    databaseName: lovejoy
+    databaseName: lovejoy_ouzj
     user: root
 
 services:
