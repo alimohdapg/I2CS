@@ -52,6 +52,6 @@ methods_of_contact = (('phone', 'Phone'), ('email', 'Email'))
 
 class Evaluations(models.Model):
     details = models.TextField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to='images')
     contact_method = models.CharField(max_length=10, choices=methods_of_contact)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
