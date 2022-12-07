@@ -4,7 +4,7 @@ version = "3.5.2"
 description = "ASGI specs, helper code, and adapters"
 category = "main"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 
 [package.extras]
 tests = ["mypy (>=0.800)", "pytest", "pytest-asyncio"]
@@ -15,7 +15,7 @@ version = "0.2.1"
 description = "Backport of the standard library zoneinfo module"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.8"
 
 [package.extras]
 tzdata = ["tzdata"]
@@ -44,7 +44,7 @@ version = "0.4.3"
 description = "A non-validating SQL parser."
 category = "main"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.8"
 
 [[package]]
 name = "tzdata"
