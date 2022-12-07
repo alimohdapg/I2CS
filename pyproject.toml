@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "lovejoy"
+
+version = "0.1.0"
+
+description = " "
+
+authors = [
+    "Ali Ahmed alimohdapg@gmail.com",
+]
+
+[tool.poetry.dependencies]
+Python = ">=3.8"
+django = "^4.1.4"
