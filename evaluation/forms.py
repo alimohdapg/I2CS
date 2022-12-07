@@ -13,8 +13,11 @@ class LoginForm(forms.Form):
 
     def clean_email(self):
         email = self.cleaned_data.get('email').lower()
-        existing = User.objects.get(email=email)
-        if not existing.is_active:
+        try:
+            existing = User.objects.get(email=email)
+        except User.DoesNotExist:
+            existing = None
+        if existing and not existing.is_active:
             raise ValidationError("Please verify email.")
         return email
 
