@@ -8,7 +8,7 @@ services:
     name: lovejoy-evaluation
     env: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn lovejoy.wsgi:application"
+    startCommand: "gunicorn I2CS.wsgi:application"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
