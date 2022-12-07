@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "lovejoy"
 
-version = "0.1.0"
+version = "1.0.0"
 
 description = " "
 
@@ -10,5 +10,7 @@ authors = [
 ]
 
 [tool.poetry.dependencies]
-Python = ">=3.8"
+python = ">=3.8"
 django = "^4.1.4"
+dj-database-url = "^1.0.0"
+psycopg2-binary = "^2.9.5"
