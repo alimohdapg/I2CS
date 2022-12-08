@@ -1,3 +1,5 @@
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 from django import forms
 from django.contrib.auth import password_validation
 from .models import methods_of_contact
@@ -10,6 +12,7 @@ from django.core import validators
 class LoginForm(forms.Form):
     email = forms.CharField(label='Email', max_length=254)
     password = forms.CharField(label='Password', max_length=128, widget=forms.PasswordInput)
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
     def clean_email(self):
         email = self.cleaned_data.get('email').lower()
@@ -31,6 +34,7 @@ class SignUpForm(forms.Form):
     password1 = forms.CharField(label='Password', max_length=128, widget=forms.PasswordInput,
                                 help_text=password_validation.password_validators_help_text_html())
     password2 = forms.CharField(label='Confirm Password', max_length=128, widget=forms.PasswordInput)
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
     def clean_email(self):
         email = self.cleaned_data.get('email').lower()
