@@ -15,7 +15,7 @@ def index(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            user = authenticate(request, email=form.cleaned_data['email'], password=form.cleaned_data['password'])
+            user = authenticate(request=request, email=form.cleaned_data['email'], password=form.cleaned_data['password'])
             if user is not None:
                 logout(request)
                 login(request, user)
