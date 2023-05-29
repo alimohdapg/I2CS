@@ -1,6 +1,6 @@
 # I2CS
 
-[G6077] Introduction to Computer Security
+**[G6077] Introduction to Computer Security**
 
 A secure web application for a local antique dealer named Lovejoy.
 
